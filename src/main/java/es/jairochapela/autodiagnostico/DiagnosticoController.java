@@ -1,7 +1,10 @@
 package es.jairochapela.autodiagnostico;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +20,8 @@ public class DiagnosticoController implements WebMvcConfigurer {
      * @return
      */
 	@GetMapping("/")
-	public String showForm(Model model) {
-        model.addAttribute("paciente", new Paciente());
+	public String showForm(Paciente paciente) {
+        //model.addAttribute("paciente", new Paciente());
 		return "form";
     }
     
@@ -29,7 +32,15 @@ public class DiagnosticoController implements WebMvcConfigurer {
      * @return
      */
     @PostMapping("/")
-    public String procesarDatos(@ModelAttribute Paciente paciente) {
-        return "form";
+    public String procesarDatos(@Valid Paciente paciente, BindingResult bindingResult, Model model) {
+        // Primero comprobamos que no haya errores en los campos del formulario.
+        if (bindingResult.hasErrors()) {
+            return "form";
+        }
+
+        // Si no hay errores en el formulario, seguimos por aquí.
+        model.addAttribute("resultado", "No estás enfermo");
+        return "resultado";
     }
+
 }
