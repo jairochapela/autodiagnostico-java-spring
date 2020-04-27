@@ -1,6 +1,15 @@
 package es.jairochapela.autodiagnostico;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Paciente {
+
+    @Id
+    private int id;
 
     private String comunidadAutonoma;
     
