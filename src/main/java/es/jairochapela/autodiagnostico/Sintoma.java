@@ -6,35 +6,29 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "comunidades")
-public class ComunidadAutonoma {
+@Table(name = "sintomas")
+public class Sintoma {
 
     @Id
-    private long id;
+    private int id;
 
     @Column(name = "nombre")
     private String nombre;
 
-    public ComunidadAutonoma() {
+    public Sintoma() {
     }
 
-
-    public ComunidadAutonoma(long id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-	}
-
-	/**
+    /**
      * @return the id
      */
-    public long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

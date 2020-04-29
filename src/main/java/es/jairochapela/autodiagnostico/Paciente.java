@@ -1,34 +1,65 @@
 package es.jairochapela.autodiagnostico;
 
+import java.util.Set;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name = "paciente")
 public class Paciente {
 
     @Id
+    @GeneratedValue
     private int id;
 
-    private String comunidadAutonoma;
+    @ManyToOne
+    private ComunidadAutonoma comunidadAutonoma;
     
+    @Column(name = "ciudad")
     private String ciudad;
 
+    @Column(name = "codigo_postal")
     private String codigoPostal;
+
+    @Column(name = "edad")
+    private int edad;
+
+    @ManyToMany
+    private Set<Sintoma> sintomas;
     
+
     /**
-     * @return the comunidadAutonoma
+     * @param id the id to set
      */
-    public String getComunidadAutonoma() {
-        return comunidadAutonoma;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
     }
 
     /**
      * @param comunidadAutonoma the comunidadAutonoma to set
      */
-    public void setComunidadAutonoma(String comunidadAutonoma) {
+    public void setComunidadAutonoma(ComunidadAutonoma comunidadAutonoma) {
         this.comunidadAutonoma = comunidadAutonoma;
+    }
+
+    /**
+     * @return the comunidadAutonoma
+     */
+    public ComunidadAutonoma getComunidadAutonoma() {
+        return comunidadAutonoma;
     }
 
     /**
