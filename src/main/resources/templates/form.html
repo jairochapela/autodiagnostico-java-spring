@@ -9,12 +9,18 @@
     <div class="container">
         <h1>Formulario de Autodiagnóstico</h1>
         <form action="#" th:action="@{/}" th:object="${paciente}" method="post">
-            C.A.: <select name="ca" id="ca" th:field="*{comunidadAutonoma}">
+            C.A.: <select name="comunidadAutonoma" id="ca" th:field="*{comunidadAutonoma}">
                 <option th:each="ca : ${comunidadesAutonomas}" th:text="${ca.nombre}" th:value="${ca.id}">
             </select>
             Ciudad: <input type="text" name="ciudad" id="ciudad" th:field="*{ciudad}">
             Código Postal: <input type="text" name="codigoPostal" id="codigoPostal" th:field="*{codigoPostal}">
             Edad: <input type="number" name="edad" id="edad">
+
+            <div th:each="s : ${sintomas}">
+                <label th:for="${s.id}" th:text="${s.nombre}"></label>
+                <input type="checkbox" name="sintomas" th:value="${s.nombre}" th:id="${s.id}">
+            </div>
+
             <input type="submit" value="Enviar">
         </form>
     </div>

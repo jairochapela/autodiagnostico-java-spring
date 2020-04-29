@@ -2,6 +2,8 @@ package es.jairochapela.autodiagnostico;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Controller
 public class DiagnosticoController implements WebMvcConfigurer {
 
+    
+    @PersistenceContext
+    EntityManager entityManager;
 
     /**
      * Este método del controlador únicamente muestra la plantilla del formulario HTML.
@@ -23,28 +28,12 @@ public class DiagnosticoController implements WebMvcConfigurer {
 	@GetMapping("/")
 	public String showForm(final Paciente paciente, final Model model) {
         //model.addAttribute("paciente", new Paciente());
-        final List<ComunidadAutonoma> comunidadesAutonomas = List.of(
-            new ComunidadAutonoma(1, "Andalucía"),
-            new ComunidadAutonoma(2, "Aragón"),
-            new ComunidadAutonoma(3, "Principado de Asturias"),
-            new ComunidadAutonoma(4, "Islas Baleares"),
-            new ComunidadAutonoma(5, "País Vasco"),
-            new ComunidadAutonoma(6, "Canarias"),
-            new ComunidadAutonoma(7, "Cantabria"),
-            new ComunidadAutonoma(8, "Castilla-La Mancha"),
-            new ComunidadAutonoma(9, "Castilla y León"),
-            new ComunidadAutonoma(10, "Cataluña"),
-            new ComunidadAutonoma(11, "Extremadura"),
-            new ComunidadAutonoma(12, "Galicia"),
-            new ComunidadAutonoma(13, "Comunidad de Madrid"),
-            new ComunidadAutonoma(14, "Región de Murcia"),
-            new ComunidadAutonoma(15, "Comunidad Foral de Navarra"),
-            new ComunidadAutonoma(16, "La Rioja"),
-            new ComunidadAutonoma(17, "Comunidad Valenciana"),
-            new ComunidadAutonoma(18, "Ceuta"),
-            new ComunidadAutonoma(19, "Melilla")
-        );
+
+        final List<ComunidadAutonoma> comunidadesAutonomas = entityManager.createQuery("SELECT c FROM ComunidadAutonoma c", ComunidadAutonoma.class).getResultList();
+        final List<Sintoma> sintomas = entityManager.createQuery("SELECT s FROM Sintoma s", Sintoma.class).getResultList();
+        
         model.addAttribute("comunidadesAutonomas", comunidadesAutonomas);
+        model.addAttribute("sintomas", sintomas);
 		return "form";
     }
 
