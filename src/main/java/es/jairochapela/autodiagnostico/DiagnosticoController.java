@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Controller
@@ -45,14 +46,16 @@ public class DiagnosticoController implements WebMvcConfigurer {
      * @return
      */
     @PostMapping("/")
-    public String procesarDatos(@Valid final Paciente paciente, final BindingResult bindingResult, final Model model) {
+    public String procesarDatos(@Valid final Paciente paciente, final BindingResult bindingResult, final Model model, @RequestParam List<String> sintomas) {
         // Primero comprobamos que no haya errores en los campos del formulario.
         if (bindingResult.hasErrors()) {
             return "form";
         }
 
         // Si no hay errores en el formulario, seguimos por aquí.
-        model.addAttribute("resultado", "No estás enfermo");
+        if (sintomas.size() >= 2) model.addAttribute("resultado", "Estás enfermo");
+        else model.addAttribute("resultado", "No estás enfermo");
+
         return "resultado";
     }
 
